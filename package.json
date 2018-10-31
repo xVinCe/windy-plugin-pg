@@ -1,5 +1,5 @@
 {
-  "name": "windy-plugin-paragliding",
+  "name": "windy-plugin-pg",
   "version": "0.1.0",
   "description": "Windy plugin to announce flyability in paragliding sites around the user",
   "main": "dist/plugin.js",

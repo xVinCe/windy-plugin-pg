@@ -1,4 +1,4 @@
-{
+export default {
   "gpx": {
     "-version": "1.1",
     "-creator": "http://paraglidingearth.com",
@@ -33,9 +33,9 @@
         "name": "Otivar",
         "ele": "893",
         "link": "http://www.paraglidingearth.com/?site=6601",
-        "desc": "Nice clear slope, with enough room for 2 gliders to launch at same time.  
+        "desc": `Nice clear slope, with enough room for 2 gliders to launch at same time.  
 
-Tricky top landing because of cables directly behind, but can be done if thermals are not kicking right over launch.  ",
+Tricky top landing because of cables directly behind, but can be done if thermals are not kicking right over launch.  `,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -98,10 +98,10 @@ Tricky top landing because of cables directly behind, but can be done if thermal
             "W": "0",
             "NW": "0"
           },
-          "going_there": "A-384 out of  Algodonales direction west: turn right into A-8126, then right into CA-9101.
+          "going_there": `A-384 out of  Algodonales direction west: turn right into A-8126, then right into CA-9101.
 You pass the LZ for 'Poniente'; leave CA-9101 after 'la Muela', turning right; sign: 'pistas' (from here on road is unpaved, but no problem for 2WD).
 If coming from 'Olvera' you can drive more directly to launch by taking the right turn towards 'la Muela' (CA-9101): turn-off after Olvera, at 36.9436033,-5.3086977, then as. above
-Hiking to launch(es) is also possible and often done.",
+Hiking to launch(es) is also possible and often done.`,
           "comments": "Excellent site for all kinds of pilots; except summer months, when it's too strong, But then nobody is here anyway, as it's too hot with temperatures sometimes above 40°C...",
           "weather": "http://www.civalgodonales.com/meteo"
         }
@@ -139,9 +139,9 @@ Hiking to launch(es) is also possible and often done.",
         "name": "Cenes de la Vega (Granada)",
         "ele": "1270",
         "link": "http://www.paraglidingearth.com/?site=6816",
-        "desc": "Large and easy for all kind of pilots
+        "desc": `Large and easy for all kind of pilots
 Orientation from SW to NW.
-Top-landing possible",
+Top-landing possible`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -163,17 +163,17 @@ Top-landing possible",
             "W": "2",
             "NW": "2"
           },
-          "going_there": "LANDING:
+          "going_there": `LANDING:
 Follow road to 'Sierra Nevada' at the end of the tunnel turn rght (do NOT go left to 'Cenes de la Vega'!),then it's the first exit (again 'Cenes de la Vega'), after having undercrossed the highwaybridge your there: you can't miss it!
 
 TAKE OFF:
 Follow the road to 'Sierra Nevada', the turn right for ' el Purche'; follow this road after the restaurant of el Purche until the first track on the right side.
-Park your car at the picnic area, the take off it's just at 2 minutes walking up.",
-          "comments": "start of a lot of XC flights, from March to November strong thermals at mid-day to 1700.
+Park your car at the picnic area, the take off it's just at 2 minutes walking up.`,
+          "comments": `start of a lot of XC flights, from March to November strong thermals at mid-day to 1700.
 sometimes it'ts posible to fly over 4000 m...at 1900!!!
 
 meeting point at the olive's tree under the landing 1600/1700 (summer)
-1300/1500 (winter)",
+1300/1500 (winter)`,
           "weather": "Don't fly with N wind, very turbulent!"
         }
       },
@@ -183,10 +183,10 @@ meeting point at the olive's tree under the landing 1600/1700 (summer)
         "type": "landing",
         "name": "Cenes de la Vega (Granada) landing",
         "ele": "750",
-        "desc": "very long and wide, ok for beginners
+        "desc": `very long and wide, ok for beginners
 Don't fly low over the road !
 Study info board at LZ, which shows the areas which are not be be overflown, resp with at least 150/Gnd!
-",
+`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "6816"
@@ -303,17 +303,17 @@ Study info board at LZ, which shows the areas which are not be be overflown, res
             "W": "2",
             "NW": "1"
           },
-          "going_there": "From Sierra Nevada Ski resort by :
+          "going_there": `From Sierra Nevada Ski resort by :
 
-Borreguiles - laguna de las yeguas-el cartujo-tajos altos-Pico del caballo ( 5/6 hours)",
-          "comments": "Long glide more than 15 km with a beautiful landscape
+Borreguiles - laguna de las yeguas-el cartujo-tajos altos-Pico del caballo ( 5/6 hours)`,
+          "comments": `Long glide more than 15 km with a beautiful landscape
 Sometimes ypu can see morocco from the top and during the flight...
 It's quite long o get there...
 
-Just under the top, in case of bad weather you have a bad hute to stay for night.",
-          "weather": "No wind or light W wind.
+Just under the top, in case of bad weather you have a bad hute to stay for night.`,
+          "weather": `No wind or light W wind.
 
-If you launch after 12.00 you will find nice and strong thermals, better during the winter"
+If you launch after 12.00 you will find nice and strong thermals, better during the winter`
         }
       },
       {
@@ -449,9 +449,9 @@ If you launch after 12.00 you will find nice and strong thermals, better during 
         "type": "landing",
         "name": "Algodonales - Poniente landing",
         "ele": "478",
-        "desc": "ATTN: east of LZ: badly visible powerlines parallel to road! (> see pix)
+        "desc": `ATTN: east of LZ: badly visible powerlines parallel to road! (> see pix)
 With strong(er) westerly winds do NOT fly behind trees during final approach (> turbulence)!!
-HG: a bit small > check-out first (other, larger fields available: ATTN:powerlines!)",
+HG: a bit small > check-out first (other, larger fields available: ATTN:powerlines!)`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "9167"
@@ -510,12 +510,12 @@ HG: a bit small > check-out first (other, larger fields available: ATTN:powerlin
             "W": "0",
             "NW": "0"
           },
-          "going_there": "Paved road to 'Lomo del Gato';
+          "going_there": `Paved road to 'Lomo del Gato';
 if you continue on this road towards 'Cerro de Itrabo', it will later trun into a dirt (4WD!) road; Alternative: drive the long(!) way around via the north side... (paved until turn-off at N36.79328 W3.65171, then dirt, but 2WD)
 
 Unless you have an offroad vehicle, the \"long\" variant is most likely the shorter way, time-wise.
 
-If you have rental, make sure you have a fully comprehensive insurance.",
+If you have rental, make sure you have a fully comprehensive insurance.`,
           "comments": "nil"
         }
       },
@@ -623,18 +623,18 @@ If you have rental, make sure you have a fully comprehensive insurance.",
             "W": "0",
             "NW": "2"
           },
-          "going_there": "Go to Rute De Las Cruces.
+          "going_there": `Go to Rute De Las Cruces.
 Take road around south side of mountain to GPS mark:
 37deg19.8'N
 4deg19.92W
 
 Follow up track at this point for 3km to upper mountain area.
-",
-          "comments": "imported from http://xc.dhv.de.....................
+`,
+          "comments": `imported from http://xc.dhv.de.....................
 
 
 Lots of flatlands and olive trees over the back.
-"
+`
         }
       },
       {
@@ -668,8 +668,8 @@ Lots of flatlands and olive trees over the back.
         "name": "el Purche / Casa Blanca",
         "ele": "1449",
         "link": "http://www.paraglidingearth.com/?site=9909",
-        "desc": "10/2015: apparently we are not very welcome here, as the owners of the house ('Casa Blanca') have made some constructions which have reduced TO space quite a bit and make launching now rather difficult...
-It's much easier to launch in 'Cenes'",
+        "desc": `10/2015: apparently we are not very welcome here, as the owners of the house ('Casa Blanca') have made some constructions which have reduced TO space quite a bit and make launching now rather difficult...
+It's much easier to launch in 'Cenes'`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -691,8 +691,7 @@ It's much easier to launch in 'Cenes'",
             "W": "0",
             "NW": "0"
           },
-          "going_there": "a detailed description is omitted on purpose (see 'Takeoff')
-",
+          "going_there": "a detailed description is omitted on purpose (see 'Takeoff')",
           "weather": "N-winds!!"
         }
       },
@@ -702,8 +701,8 @@ It's much easier to launch in 'Cenes'",
         "type": "landing",
         "name": "el Purche / Casa Blanca landing",
         "ele": "750",
-        "desc": "Same LZ as for 'Cenes de la Vega'.
-If you sink out early, you'll have to land in the fields below TO; no official LZ here.",
+        "desc": `Same LZ as for 'Cenes de la Vega'.
+If you sink out early, you'll have to land in the fields below TO; no official LZ here.`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "9909"
@@ -738,12 +737,12 @@ If you sink out early, you'll have to land in the fields below TO; no official L
             "W": "0",
             "NW": "0"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
 FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48
 -------------------------------------------
 
-at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southerly winds at the coast)"
+at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southerly winds at the coast)`
         }
       },
       {
@@ -786,14 +785,14 @@ at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southe
             "W": "0",
             "NW": "2"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
 FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=4
 -----------------------------------------------
 at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southerly winds at the coast) Acft on visual approach can be (much) lower!
-",
-          "weather": "Wind! 
-Already 20m higher than launch the wind can be 10kmh stronger than where you are standing! (The locals say: 'if you hear the mountain 'sing', than it could be too strong!')"
+`,
+          "weather": `Wind! 
+Already 20m higher than launch the wind can be 10kmh stronger than where you are standing! (The locals say: 'if you hear the mountain 'sing', than it could be too strong!')`
         }
       },
       {
@@ -825,12 +824,12 @@ Already 20m higher than launch the wind can be 10kmh stronger than where you are
             "W": "1",
             "NW": "2"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
 FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48
 --------------------------------------------
 
-at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southerly winds at the coast)"
+at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southerly winds at the coast)`
         }
       },
       {
@@ -851,9 +850,9 @@ at 5500ft/QNH and above airline traffic !! (approach to Malaga with no or southe
         "name": "Teba",
         "ele": "594",
         "link": "http://www.paraglidingearth.com/?site=9918",
-        "desc": "other TO's available:
+        "desc": `other TO's available:
 S: N36.97936 W4.91810
-N: N36.98906 W4.91508",
+N: N36.98906 W4.91508`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -875,10 +874,10 @@ N: N36.98906 W4.91508",
             "W": "1",
             "NW": "2"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
 FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48
-"
+`
         }
       },
       {
@@ -915,8 +914,8 @@ FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in ci
         "name": "La Herradura",
         "ele": "84",
         "link": "http://www.paraglidingearth.com/?site=9922",
-        "desc": "A small triangular area next to buildings 70 metres above the beach.
-Watch out for pilots coming low from left side before you launch!",
+        "desc": `A small triangular area next to buildings 70 metres above the beach.
+Watch out for pilots coming low from left side before you launch!`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -1158,8 +1157,8 @@ Watch out for pilots coming low from left side before you launch!",
         "name": "Loja poniente",
         "ele": "1186",
         "link": "http://www.paraglidingearth.com/?site=11334",
-        "desc": "large takeoff, very well mantained!
-Top landing possible",
+        "desc": `large takeoff, very well mantained!
+Top landing possible`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -1181,13 +1180,10 @@ Top landing possible",
             "W": "2",
             "NW": "1"
           },
-          "going_there": "Good dirt road from Loja; signposted ?sierra Gorda'; the entrance is not easily found! Or with the club members in their bus (departing from bar 'el Cerro' in Loja (on the north side of the river!)
-
-",
-          "comments": "An incredible restitucion in summer makes this one of the best sites(places) for flights into the late afternoon and for enjoying the setting sun.
-",
-          "weather": "No flights in southerly winds!
-Take care with south west winds on landing: it could be strong and turbulent."
+          "going_there": "Good dirt road from Loja; signposted ?sierra Gorda'; the entrance is not easily found! Or with the club members in their bus (departing from bar 'el Cerro' in Loja (on the north side of the river!)",
+          "comments": "An incredible restitucion in summer makes this one of the best sites(places) for flights into the late afternoon and for enjoying the setting sun.",
+          "weather": `No flights in southerly winds!
+Take care with south west winds on landing: it could be strong and turbulent.`
         }
       },
       {
@@ -1196,9 +1192,9 @@ Take care with south west winds on landing: it could be strong and turbulent."
         "type": "landing",
         "name": "Loja poniente landing",
         "ele": "636",
-        "desc": "Venta del Rayo: Very large, ideal for beginners; can be seen from TO; windsocks on the south side of the field.
+        "desc": `Venta del Rayo: Very large, ideal for beginners; can be seen from TO; windsocks on the south side of the field.
 LZ in Loja: N37 10 16.0 W4 08 38.0/ 450m
-LZ near Haighway: N37 09 36.3 W4 11 14.2/ 575m",
+LZ near Haighway: N37 09 36.3 W4 11 14.2/ 575m`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "11334"
@@ -1233,8 +1229,8 @@ LZ near Haighway: N37 09 36.3 W4 11 14.2/ 575m",
             "W": "0",
             "NW": "1"
           },
-          "comments": "With a small birsa of north approaching the slits of the right they support you of surplus, there is a line of cables in front of the takeoff but they go of surplus with the gliding landing without problems   
-    Con una pequeÃ±a birsa de norte acercandose un los tajos de la derecha te sostienen de sobra, el heno una linea de cablegrafÃ­a que delante del despegue pero se pasan de sobra estafa planeo el-aterrizaje el pecado problemas  "
+          "comments": `With a small birsa of north approaching the slits of the right they support you of surplus, there is a line of cables in front of the takeoff but they go of surplus with the gliding landing without problems   
+    Con una pequeÃ±a birsa de norte acercandose un los tajos de la derecha te sostienen de sobra, el heno una linea de cablegrafÃ­a que delante del despegue pero se pasan de sobra estafa planeo el-aterrizaje el pecado problemas  `
         }
       },
       {
@@ -1287,8 +1283,8 @@ LZ near Haighway: N37 09 36.3 W4 11 14.2/ 575m",
         "type": "landing",
         "name": "Loja levante  landing",
         "ele": "451",
-        "desc": "Soccer field in Loja;
-some fields below launch",
+        "desc": `Soccer field in Loja;
+some fields below launch`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "11337"
@@ -1313,7 +1309,7 @@ some fields below launch",
         "name": "Alcaudete",
         "ele": "1046",
         "link": "http://www.paraglidingearth.com/?site=11353",
-        "desc": "We have launch sites within a radius of three miles for all orientations, so that if no strong wind or rain, we have secured a flight every day. Below I put a brief description of the takeoff and landing areas, with pictures of each.
+        "desc": `We have launch sites within a radius of three miles for all orientations, so that if no strong wind or rain, we have secured a flight every day. Below I put a brief description of the takeoff and landing areas, with pictures of each.
 ----------------------------------
 SIERRA AHILLOS see photos (4)
 Coordinates:
@@ -1351,7 +1347,7 @@ Altitude: 1086 m.
 MORRON TO ALCAUDETE
 The MorrÃ³n with a drop of 400 meters from the landing to reach the park of Alcaudete (same landing from Ahillos). It has all the directions from north to south west and west to take off and easy access, which may be the most used, as it would make several flights in a short time. Just bring it we need a little cleaning up the stones in the north and south off the west and is clean. For now, take off West clean, north and southwest departures hard (only reverse inflation and slightly margin of motion).
 
-",
+`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -1383,7 +1379,7 @@ The MorrÃ³n with a drop of 400 meters from the landing to reach the park of Al
         "type": "landing",
         "name": "Alcaudete landing",
         "ele": "687",
-        "desc": "Alcaudete view photos (2)
+        "desc": `Alcaudete view photos (2)
 Coordinates:
 latitude = 37.5854654
 length = -4.0734976
@@ -1403,7 +1399,7 @@ Coordinates:
 latitude = 37.6350754
 length = -3.9888207
 Altitude: 531 m.
-Landing on the LAS CASILLAS soccer field  or on the shore of the lake in case anyone does not have enough precision to land on the football field, the edge of the swamp is very large, well enough to hang gliders to land. Landing very spacious and clean perfect for novice riders.",
+Landing on the LAS CASILLAS soccer field  or on the shore of the lake in case anyone does not have enough precision to land on the football field, the edge of the swamp is very large, well enough to hang gliders to land. Landing very spacious and clean perfect for novice riders.`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "11353"
@@ -1573,14 +1569,10 @@ Landing on the LAS CASILLAS soccer field  or on the shore of the lake in case an
         "name": "Moclin",
         "ele": "1149",
         "link": "http://www.paraglidingearth.com/?site=12728",
-        "desc": "It is possible to flight  with N NW W wind taking off from this point:
+        "desc": `It is possible to flight  with N NW W wind taking off from this point:
 N37,3335 W3,8117 1090m altitude
 and landing on any point beside Puertolope town.
-
-
-
-
-",
+`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -1602,10 +1594,8 @@ and landing on any point beside Puertolope town.
             "W": "0",
             "NW": "0"
           },
-          "flight_rules": "Very near to the CTR of Granada Airport
-",
-          "going_there": "Route N-432 from Granada to Cordoba, when you arrive to Puertolope, in the middle of the town turn right to Moclin.
-",
+          "flight_rules": "Very near to the CTR of Granada Airport",
+          "going_there": "Route N-432 from Granada to Cordoba, when you arrive to Puertolope, in the middle of the town turn right to Moclin.",
           "weather": "Strong thermals in summer"
         }
       },
@@ -1764,8 +1754,8 @@ and landing on any point beside Puertolope town.
         "name": "Caneta la Real",
         "ele": "727",
         "link": "http://www.paraglidingearth.com/?site=13449",
-        "desc": "Optional takeoff behind the cimetery
-36.945668E 5.019516W",
+        "desc": `Optional takeoff behind the cimetery
+36.945668E 5.019516W`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -1787,9 +1777,9 @@ and landing on any point beside Puertolope town.
             "W": "0",
             "NW": "0"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
-FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48"
+FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48`
         }
       },
       {
@@ -2006,8 +1996,8 @@ FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in ci
             "W": "0",
             "NW": "0"
           },
-          "going_there": "A bit tricky! Turn into dirt road where 'Parking LZ is marked.
-You'll pass the LZ.",
+          "going_there": `A bit tricky! Turn into dirt road where 'Parking LZ is marked.
+You'll pass the LZ.`,
           "comments": "If you get about 150m over launch, then you can attempt to cross the gully (where the LZ is) and try to fly east towards the Sierra Nevada."
         }
       },
@@ -2085,9 +2075,9 @@ You'll pass the LZ.",
         "name": "SEVILLAPARAMOTOR",
         "ele": "51",
         "link": "http://www.paraglidingearth.com/?site=14678",
-        "desc": "This site is for paramotoring.
+        "desc": `This site is for paramotoring.
 Flying site of Sevillaparamotor paramotor school and Club Paramotor Dos Hermanas.
-",
+`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2109,12 +2099,11 @@ Flying site of Sevillaparamotor paramotor school and Club Paramotor Dos Hermanas
             "W": "2",
             "NW": "2"
           },
-          "flight_rules": "Do not enter inside LEZL CTR airport (Seville airport) and LEEC (Military Helicopter Base).
+          "flight_rules": `Do not enter inside LEZL CTR airport (Seville airport) and LEEC (Military Helicopter Base).
 Do not fly over 1000 ft above ground level because you are inside TMA Seville.
-Finaly don'y fly over the cities and houses.",
+Finaly don'y fly over the cities and houses.`,
           "comments": "We can do tourist biplace flights with our paratrikes Clementeparamotor.",
-          "weather": "Check LEZL Metar and Tafor for local weather conditions or weather of DOS HERMANAS (SEVILLA) in your favorite weather site.
-"
+          "weather": "Check LEZL Metar and Tafor for local weather conditions or weather of DOS HERMANAS (SEVILLA) in your favorite weather site."
         }
       },
       {
@@ -2198,9 +2187,9 @@ Finaly don'y fly over the cities and houses.",
         "type": "landing",
         "name": "Castell de Ferro",
         "ele": "2",
-        "desc": "either:
+        "desc": `either:
 - Castell de Ferro: beach;
-- los Tablones: riverbed: wind! cables! turbulences! (water!)",
+- los Tablones: riverbed: wind! cables! turbulences! (water!)`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "15077"
@@ -2221,9 +2210,9 @@ Finaly don'y fly over the cities and houses.",
         "name": "Casarabuonela (Sierra Prieta)",
         "ele": "935",
         "link": "http://www.paraglidingearth.com/?site=18323",
-        "desc": "small, short cleared field below road; space for 1 glider
+        "desc": `small, short cleared field below road; space for 1 glider
 N36.78748 W4.85805, 935m
-",
+`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2245,16 +2234,14 @@ N36.78748 W4.85805, 935m
             "W": "0",
             "NW": "0"
           },
-          "flight_rules": "<b> IMPORTANT </b>
+          "flight_rules": `<b> IMPORTANT </b>
 This site is INSIDE Malaga CTR (controlled airspace) and flying without permission of ATC is NOT allowed!!
 FEADA (Federacion Andaluz de los Deportes Aereos) requests our cooperation in circular 4/16, which can be found here: www.feada.org/index.php?option=com_content&task=blogcategory&id=25&Itemid=48
 
-",
-          "going_there": "from 'Casarabuonela' follow MA-5401 direction 'el Burgo'. When road passes through the pass/ gap to the north side, take unpaved road to the left until TO. The road is in good shape (2/2014).
-Turn-off: N36.78418 W4.83612",
-          "comments": "very nice views
-
-"
+`,
+          "going_there": `from 'Casarabuonela' follow MA-5401 direction 'el Burgo'. When road passes through the pass/ gap to the north side, take unpaved road to the left until TO. The road is in good shape (2/2014).
+Turn-off: N36.78418 W4.83612`,
+          "comments": "very nice views"
         }
       },
       {
@@ -2316,9 +2303,7 @@ Turn-off: N36.78418 W4.83612",
             "W": "2",
             "NW": "2"
           },
-          "going_there": "from Granada/ LZ in Cenes follow road to 'Sierra Nevada'
-
-"
+          "going_there": "from Granada/ LZ in Cenes follow road to 'Sierra Nevada'"
         }
       },
       {
@@ -2475,11 +2460,10 @@ Turn-off: N36.78418 W4.83612",
             "NW": "2"
           },
           "flight_rules": "free of rectrictions",
-          "going_there": "To Take off point: Inside Martos, take JA-3300 route to Los Villares, 1 km later turn left Camino de la Sierra to the top of the mountain, about 4 km.
+          "going_there": `To Take off point: Inside Martos, take JA-3300 route to Los Villares, 1 km later turn left Camino de la Sierra to the top of the mountain, about 4 km.
 
-To Landing point: You sould access to Martos city and get the route to Jamilena town. Two kilometers after turn left descending by another route only 500 meters.",
-          "comments": "Very frecuently wind from NW and W good for xc flights to Pegalajar.
-",
+To Landing point: You sould access to Martos city and get the route to Jamilena town. Two kilometers after turn left descending by another route only 500 meters.`,
+          "comments": "Very frecuently wind from NW and W good for xc flights to Pegalajar.",
           "weather": "Strongs thermals in summer. Good flights at sunset."
         }
       },
@@ -2502,8 +2486,7 @@ To Landing point: You sould access to Martos city and get the route to Jamilena 
         "name": "Alcaudete-Caracolera",
         "ele": "1257",
         "link": "http://www.paraglidingearth.com/?site=16711",
-        "desc": "Litle point with many rock all around you need good control of canopy.
-",
+        "desc": "Litle point with many rock all around you need good control of canopy.",
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2525,10 +2508,8 @@ To Landing point: You sould access to Martos city and get the route to Jamilena 
             "W": "0",
             "NW": "1"
           },
-          "flight_rules": "No restrictions
-",
-          "going_there": "From Alcaudete take JA-3307 climbing to the top of the route, then turn left, continue 200 meters and turn left and climb again. Continue to the top of the mountain.
-",
+          "flight_rules": "No restrictions",
+          "going_there": "From Alcaudete take JA-3307 climbing to the top of the route, then turn left, continue 200 meters and turn left and climb again. Continue to the top of the mountain.",
           "comments": "http://www.facebook.com/groups/192564684210676/",
           "weather": "No problems with the wind from the right direction."
         }
@@ -2539,8 +2520,7 @@ To Landing point: You sould access to Martos city and get the route to Jamilena 
         "type": "landing",
         "name": "Alcaudete-Caracolera landing",
         "ele": "538",
-        "desc": "No problems, many points suitable for beginers beside the lake.
-",
+        "desc": "No problems, many points suitable for beginers beside the lake.",
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "16711"
@@ -2567,8 +2547,7 @@ To Landing point: You sould access to Martos city and get the route to Jamilena 
         "name": "Alcaudete-Ahillos-W",
         "ele": "1015",
         "link": "http://www.paraglidingearth.com/?site=16713",
-        "desc": "You can access the take off by any car climbing to the top and walking 100 meters.
-",
+        "desc": "You can access the take off by any car climbing to the top and walking 100 meters.",
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2675,10 +2654,10 @@ To Landing point: You sould access to Martos city and get the route to Jamilena 
         "name": "Montellano",
         "ele": "505",
         "link": "http://www.paraglidingearth.com/?site=18016",
-        "desc": "\"Private\"! (> see 'comment').The upper take off is an easy one.
+        "desc": `\"Private\"! (> see 'comment').The upper take off is an easy one.
 With stronger conditions, you can walk down a bit, to make your start a bit more easy.
 Also for HG.
-Toplanding is also possible. Ask the locals where the rotorline is.",
+Toplanding is also possible. Ask the locals where the rotorline is.`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2701,9 +2680,9 @@ Toplanding is also possible. Ask the locals where the rotorline is.",
             "NW": "0"
           },
           "flight_rules": "None",
-          "going_there": "Enter Montellano, follow the main road all the way up, till the end. Go right, than left and follow the road to the left. You come on a track that you follow till the first asfalt road on the right side. Follow that up till the road turns right (barbeque area), keep straight on a sandtrack and follow that up (keep going right) till you come to a metal gate. Drive trough and close the gate again. You come on a place where you can park the car.
+          "going_there": `Enter Montellano, follow the main road all the way up, till the end. Go right, than left and follow the road to the left. You come on a track that you follow till the first asfalt road on the right side. Follow that up till the road turns right (barbeque area), keep straight on a sandtrack and follow that up (keep going right) till you come to a metal gate. Drive trough and close the gate again. You come on a place where you can park the car.
 Follow the walking track that brings you to the takeoff.
-3 minutes walk.",
+3 minutes walk.`,
           "comments": "This is a PRIVATE site!! In order to leave access open for all, this site has been leased by the paragliding operators / schools in Algodonales (> see 'web'). If you want to fly here, get in contact with them and pay the small daily usage fee,so the site remains open also in the future!",
           "weather": "Wind direction = NE"
         }
@@ -2839,8 +2818,8 @@ Follow the walking track that brings you to the takeoff.
         "name": "Pico de Mulhacén",
         "ele": "3448",
         "link": "http://www.paraglidingearth.com/?site=21379",
-        "desc": "approximate coordinates !
-HIGH alpine launch! for experienced pilots only!!",
+        "desc": `approximate coordinates !
+HIGH alpine launch! for experienced pilots only!!`,
         "cmt": {
           "countryCode": "es",
           "paragliding": "1",
@@ -2904,8 +2883,7 @@ HIGH alpine launch! for experienced pilots only!!",
         "type": "landing",
         "name": "Pena Escrita landing",
         "ele": "583",
-        "desc": "VERY difficult!! NOT for beginners!
-",
+        "desc": "VERY difficult!! NOT for beginners!",
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "21403"
@@ -2950,8 +2928,8 @@ HIGH alpine launch! for experienced pilots only!!",
         "type": "landing",
         "name": "Escuzar landing",
         "ele": "968",
-        "desc": "large field(s) below launch/ along road to TO.
-Avoid landing in planted fields/ fields with crops!!",
+        "desc": `large field(s) below launch/ along road to TO.
+Avoid landing in planted fields/ fields with crops!!`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "21404"
@@ -2997,8 +2975,8 @@ Avoid landing in planted fields/ fields with crops!!",
         "type": "landing",
         "name": "Poniente (West)",
         "ele": "479",
-        "desc": "same LZ as for Algodonales -Poniente
-ATTN: power lines!!!",
+        "desc": `same LZ as for Algodonales -Poniente
+ATTN: power lines!!!`,
         "cmt": {
           "landing_countryCode": "es",
           "landing_pge_site_id": "21415"
