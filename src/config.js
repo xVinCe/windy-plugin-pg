@@ -1,7 +1,7 @@
 module.exports = {
 
 	// Display name of your plugin, as it will appear in the menu
-	displayName: 'My super plugin',
+	displayName: 'Paragliding plugin',
 
 	// Place, where opening link to your plugin will appear. So far only
 	// Allowed: 'contextmenu', 'menu'
