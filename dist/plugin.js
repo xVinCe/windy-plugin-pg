@@ -34,6 +34,12 @@ function () {
 
   var data = W.require('windy-plugin-pg/test_data');
 
+  var utils = W.require('utils');
+
+  var broadcast = W.require('broadcast');
+
+  var picker = W.require('picker');
+
   var map = W.require('map');
 
   var markers = [];
@@ -53,6 +59,16 @@ function () {
   };
 
   var load = function load() {
+    picker.on('pickerMoved', function (latLon) {
+      var _picker$getParams = picker.getParams(),
+          lat = _picker$getParams.lat,
+          lon = _picker$getParams.lon,
+          values = _picker$getParams.values,
+          overlay = _picker$getParams.overlay;
+
+      var windObject = utils.wind2obj(values);
+      console.log(windObject);
+    });
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -68,6 +84,11 @@ function () {
           markers.push(marker);
         } else {
           if (site.cmt && site.cmt.orientations) {
+            broadcast.fire('rqstOpen', 'picker', {
+              lat: site["-lat"],
+              lon: site["-lon"]
+            });
+
             var _arr = Object.keys(site.cmt.orientations);
 
             for (var _i2 = 0; _i2 < _arr.length; _i2++) {

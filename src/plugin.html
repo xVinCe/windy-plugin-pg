@@ -1,6 +1,9 @@
 <plugin>
 	<script>
 	import map from '@windy/map'
+	import picker from '@windy/picker'
+	import broadcast from '@windy/broadcast'
+	import utils from '@windy/utils'
 	import data from './test_data.mjs'
 	import angles from './angles.mjs'
 	import OrientedIcon from './icon_oriented.mjs'
@@ -22,6 +25,18 @@
 
     const load = () => {
 
+    	// Get weather infos when picker is moved
+		picker.on('pickerMoved', latLon => {
+			// picker was dragged by user to latLon coords
+
+			let { lat, lon, values, overlay } = picker.getParams()
+			// -> 50.4, 14.3, 'wind', [ U,V, ]
+
+			let windObject = utils.wind2obj( values )
+			// { overlay: 'wind', values: [ 0.4, 0.75, 0] }
+			console.log(windObject);
+		})
+
 		for (const site of data.gpx.wpt) {
 			
 			if (site.type == "landing") { // Landings
@@ -31,6 +46,10 @@
 				markers.push(marker);
 			} else { // Take-offs
 				if (site.cmt && site.cmt.orientations) {
+					// Get weather on this point => move the picker
+					broadcast.fire('rqstOpen','picker',{ lat: site["-lat"], lon: site["-lon"] });
+
+
 					for (const orientation of Object.keys(site.cmt.orientations)) {
 						if (site.cmt.orientations[orientation] >= 1) {
 							const marker = L.marker([site["-lat"], site["-lon"]], {
