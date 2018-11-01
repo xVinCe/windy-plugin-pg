@@ -30,6 +30,8 @@ function () {
 
   var OrientedIcon = W.require('windy-plugin-pg/icon_oriented');
 
+  var CenterIcon = W.require('windy-plugin-pg/icon_center');
+
   var angles = W.require('windy-plugin-pg/angles');
 
   var data = W.require('windy-plugin-pg/test_data');
@@ -68,6 +70,11 @@ function () {
           markers.push(marker);
         } else {
           if (site.cmt && site.cmt.orientations) {
+            var center = L.marker([site["-lat"], site["-lon"]], {
+              icon: CenterIcon
+            }).addTo(map);
+            markers.push(center);
+
             var _arr = Object.keys(site.cmt.orientations);
 
             for (var _i2 = 0; _i2 < _arr.length; _i2++) {
@@ -2880,10 +2887,24 @@ W.define('windy-plugin-pg/angles', [], function () {
   };
 });
 /*! */
+// This page was transpiled automatically from src\icon_center.mjs
+
+W.define('windy-plugin-pg/icon_center', [], function () {
+  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 480 480\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<polygon cx=\"240.25\" cy=\"240.25\" edge=\"115.088613\" fill=\"#000000\" id=\"svg_8\" orient=\"x\" points=\"390.6205196894497,240.25 346.5780141629551,346.5780141629551 240.25,390.6205196894497 133.92198583704487,346.5780141629551 89.87948031055032,240.25000000000003 133.92198583704484,133.92198583704487 240.24999999999997,89.87948031055032 346.5780141629551,133.92198583704484 390.6205196894497,240.24999999999997 \" shape=\"regularPoly\" sides=\"8\" stroke=\"#000000\" stroke-width=\"0\" strokeWidth=\"null\" strokecolor=\"#000000\" transform=\"rotate(22.5 240.25 240.25)\"/>\n</svg>");
+  var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
+  var Icon = L.icon({
+    iconUrl: MARKER_ICON_URL,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, 0]
+  });
+  return Icon;
+});
+/*! */
 // This page was transpiled automatically from src\icon_oriented.mjs
 
 W.define('windy-plugin-pg/icon_oriented', [], function () {
-  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 14 14\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<path d=\"M4.784,13.635c0,0 -0.106,-2.924 0.006,-4.379c0.115,-1.502 0.318,-3.151 0.686,-4.632c0.163,-0.654 0.45,-1.623 0.755,-2.44c0.202,-0.54 0.407,-1.021 0.554,-1.352c0.038,-0.085 0.122,-0.139 0.215,-0.139c0.092,0 0.176,0.054 0.214,0.139c0.151,0.342 0.361,0.835 0.555,1.352c0.305,0.817 0.592,1.786 0.755,2.44c0.368,1.481 0.571,3.13 0.686,4.632c0.112,1.455 0.006,4.379 0.006,4.379l-4.432,0Z\" style=\"fill:#002efc;\"/><path d=\"M5.481,12.731c0,0 -0.073,-3.048 0.003,-4.22c0.06,-0.909 0.886,-3.522 1.293,-4.764c0.03,-0.098 0.121,-0.165 0.223,-0.165c0.103,0 0.193,0.067 0.224,0.164c0.406,1.243 1.232,3.856 1.292,4.765c0.076,1.172 0.003,4.22 0.003,4.22l-3.038,0Z\" style=\"fill:#fff;fill-opacity:0.846008;\"/>\n</svg>");
+  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 480 480\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<path d=\"m159.999973,88.949993l29.981052,-88.95l99.936845,0l29.981041,88.95l-159.898938,0z\" fill=\"#000000\" id=\"svg_1\" stroke=\"#000000\" stroke-width=\"0\" transform=\"rotate(180 239.949 44.475)\"/>\n</svg>");
   var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
   var Icon = L.icon({
     iconUrl: MARKER_ICON_URL,

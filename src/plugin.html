@@ -3,22 +3,23 @@
 	import map from '@windy/map'
 	import data from './test_data.mjs'
 	import angles from './angles.mjs'
+	import CenterIcon from './icon_center.mjs'
 	import OrientedIcon from './icon_oriented.mjs'
 	import UnknownIcon from './icon_unknown.mjs'
 	import LandingIcon from './icon_landing.mjs'
 
-      let markers = [];
+    let markers = [];
 
-      const updateIconStyle = () => {
-        for (const marker of markers) {
-          if (marker._icon) {
-            const heading = marker._icon.getAttribute('data-heading');
-            if (marker._icon.style.transform.indexOf('rotateZ') === -1) {
-              marker._icon.style.transform = `${marker._icon.style.transform} rotateZ(${(heading || 0)}deg)`;
-            }
-          }
-        }
-      }
+	const updateIconStyle = () => {
+		for (const marker of markers) {
+			if (marker._icon) {
+				const heading = marker._icon.getAttribute('data-heading');
+				if (marker._icon.style.transform.indexOf('rotateZ') === -1) {
+					marker._icon.style.transform = `${marker._icon.style.transform} rotateZ(${(heading || 0)}deg)`;
+				}
+			}
+		}
+	}
 
     const load = () => {
 
@@ -31,6 +32,10 @@
 				markers.push(marker);
 			} else { // Take-offs
 				if (site.cmt && site.cmt.orientations) {
+					const center = L.marker([site["-lat"], site["-lon"]], {
+								icon: CenterIcon,
+							}).addTo(map);
+							markers.push(center);
 					for (const orientation of Object.keys(site.cmt.orientations)) {
 						if (site.cmt.orientations[orientation] >= 1) {
 							const marker = L.marker([site["-lat"], site["-lon"]], {
