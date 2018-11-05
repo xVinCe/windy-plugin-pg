@@ -28,9 +28,7 @@ function () {
 
   var UnknownIcon = W.require('windy-plugin-pg/icon_unknown');
 
-  var OrientedIcon = W.require('windy-plugin-pg/icon_oriented');
-
-  var CenterIcon = W.require('windy-plugin-pg/icon_center');
+  var createIcon = W.require('windy-plugin-pg/icon_create');
 
   var angles = W.require('windy-plugin-pg/angles');
 
@@ -41,20 +39,28 @@ function () {
   var markers = [];
 
   var updateIconStyle = function updateIconStyle() {
+    var zoom = map.getZoom();
+    console.log('updateIconStyle, zoom=', zoom);
+
     for (var _i = 0; _i < markers.length; _i++) {
       var marker = markers[_i];
 
       if (marker._icon) {
-        var heading = marker._icon.getAttribute('data-heading');
-
-        if (marker._icon.style.transform.indexOf('rotateZ') === -1) {
-          marker._icon.style.transform = "".concat(marker._icon.style.transform, " rotateZ(").concat(heading || 0, "deg)");
+        if (zoom < 8) {
+          marker._icon.style.display = 'none';
+        } else {
+          if (marker.options.type == 'landing' && zoom < 12) {
+            marker._icon.style.display = 'none';
+          } else {
+            marker._icon.style.display = 'block';
+          }
         }
       }
     }
   };
 
   var load = function load() {
+    console.log('load');
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -62,42 +68,25 @@ function () {
     try {
       for (var _iterator = data.gpx.wpt[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var site = _step.value;
+        var icon = void 0;
 
         if (site.type == "landing") {
-          var marker = L.marker([site["-lat"], site["-lon"]], {
-            icon: LandingIcon
-          }).addTo(map);
-          markers.push(marker);
+          icon = LandingIcon;
         } else {
           if (site.cmt && site.cmt.orientations) {
-            var center = L.marker([site["-lat"], site["-lon"]], {
-              icon: CenterIcon
-            }).addTo(map);
-            markers.push(center);
-
-            var _arr = Object.keys(site.cmt.orientations);
-
-            for (var _i2 = 0; _i2 < _arr.length; _i2++) {
-              var orientation = _arr[_i2];
-
-              if (site.cmt.orientations[orientation] >= 1) {
-                var _marker = L.marker([site["-lat"], site["-lon"]], {
-                  icon: OrientedIcon
-                }).addTo(map);
-
-                _marker._icon.setAttribute('data-heading', angles[orientation]);
-
-                markers.push(_marker);
-              }
-            }
+            icon = createIcon(site.cmt.orientations);
           } else {
-            var _marker2 = L.marker([site["-lat"], site["-lon"]], {
-              icon: UnknownIcon
-            }).addTo(map);
-
-            markers.push(_marker2);
+            icon = UnknownIcon;
           }
         }
+
+        var marker = L.marker([site["-lat"], site["-lon"]], {
+          icon: icon,
+          title: site.name,
+          type: site.type,
+          opacity: 0.65
+        }).addTo(map);
+        markers.push(marker);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -2887,38 +2876,52 @@ W.define('windy-plugin-pg/angles', [], function () {
   };
 });
 /*! */
-// This page was transpiled automatically from src\icon_center.mjs
+// This page was transpiled automatically from src\icon_create.mjs
 
-W.define('windy-plugin-pg/icon_center', [], function () {
-  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 480 480\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<polygon cx=\"240.25\" cy=\"240.25\" edge=\"115.088613\" fill=\"#000000\" id=\"svg_8\" orient=\"x\" points=\"390.6205196894497,240.25 346.5780141629551,346.5780141629551 240.25,390.6205196894497 133.92198583704487,346.5780141629551 89.87948031055032,240.25000000000003 133.92198583704484,133.92198583704487 240.24999999999997,89.87948031055032 346.5780141629551,133.92198583704484 390.6205196894497,240.24999999999997 \" shape=\"regularPoly\" sides=\"8\" stroke=\"#000000\" stroke-width=\"0\" strokeWidth=\"null\" strokecolor=\"#000000\" transform=\"rotate(22.5 240.25 240.25)\"/>\n</svg>");
-  var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
-  var Icon = L.icon({
-    iconUrl: MARKER_ICON_URL,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, 0]
-  });
-  return Icon;
-});
-/*! */
-// This page was transpiled automatically from src\icon_oriented.mjs
+W.define('windy-plugin-pg/icon_create', [], function () {
+  var angles = {
+    "N": 0,
+    "NE": 45,
+    "E": 90,
+    "SE": 135,
+    "S": 180,
+    "SW": 225,
+    "W": 270,
+    "NW": 315
+  }; // Base icon with center only
 
-W.define('windy-plugin-pg/icon_oriented', [], function () {
-  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 480 480\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<path d=\"m159.999973,88.949993l29.981052,-88.95l99.936845,0l29.981041,88.95l-159.898938,0z\" fill=\"#000000\" id=\"svg_1\" stroke=\"#000000\" stroke-width=\"0\" transform=\"rotate(180 239.949 44.475)\"/>\n</svg>");
-  var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
-  var Icon = L.icon({
-    iconUrl: MARKER_ICON_URL,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, 0]
-  });
-  return Icon;
+  var SVG_START = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 100 100\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<polygon points=\"33.4,9.9 66.6,9.9 90.1,33.4 90.1,66.6 66.6,90.1 33.4,90.1 9.9,66.6 9.9,33.4\" fill=\"#000000\" />"; // Path for an orientation
+
+  var ORIENTATION = "<path d=\"m 29.4,0 l 4,9.6 l 33.2,0 l 4,-9.6 z\" fill=\"#000000\" id=\"svg_1\" transform=\"rotate(_ANGLE_ 50 50)\"/>";
+  var SVG_END = "</svg>";
+  var SVG_URL_PREFIX = "data:image/svg+xml;utf8,";
+  return function (orientations) {
+    var icon = SVG_START;
+
+    var _arr = Object.keys(orientations);
+
+    for (var _i2 = 0; _i2 < _arr.length; _i2++) {
+      var orientation = _arr[_i2];
+
+      if (orientations[orientation] >= 1) {
+        icon += ORIENTATION.replace('_ANGLE_', angles[orientation]);
+      }
+    }
+
+    icon = SVG_URL_PREFIX + encodeURI(icon + SVG_END);
+    return L.icon({
+      iconUrl: icon,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, 0]
+    });
+  };
 });
 /*! */
 // This page was transpiled automatically from src\icon_unknown.mjs
 
 W.define('windy-plugin-pg/icon_unknown', [], function () {
-  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 512 512\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<path d=\"M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z\"/>\n</svg>");
+  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 512 512\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<path d=\"M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z\"/>\n</svg>");
   var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
   var Icon = L.icon({
     iconUrl: MARKER_ICON_URL,
@@ -2932,7 +2935,7 @@ W.define('windy-plugin-pg/icon_unknown', [], function () {
 // This page was transpiled automatically from src\icon_landing.mjs
 
 W.define('windy-plugin-pg/icon_landing', [], function () {
-  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 512 512\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;\">\n<path d=\"M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-143.6-28.9L288 302.6V120c0-13.3-10.7-24-24-24h-16c-13.3 0-24 10.7-24 24v182.6l-72.4-75.5c-9.3-9.7-24.8-9.9-34.3-.4l-10.9 11c-9.4 9.4-9.4 24.6 0 33.9L239 404.3c9.4 9.4 24.6 9.4 33.9 0l132.7-132.7c9.4-9.4 9.4-24.6 0-33.9l-10.9-11c-9.5-9.5-25-9.3-34.3.4z\"/>\n</svg>");
+  var MARKER = encodeURI("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 512 512\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<path d=\"M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-143.6-28.9L288 302.6V120c0-13.3-10.7-24-24-24h-16c-13.3 0-24 10.7-24 24v182.6l-72.4-75.5c-9.3-9.7-24.8-9.9-34.3-.4l-10.9 11c-9.4 9.4-9.4 24.6 0 33.9L239 404.3c9.4 9.4 24.6 9.4 33.9 0l132.7-132.7c9.4-9.4 9.4-24.6 0-33.9l-10.9-11c-9.5-9.5-25-9.3-34.3.4z\"/>\n</svg>");
   var MARKER_ICON_URL = "data:image/svg+xml;utf8,".concat(MARKER);
   var Icon = L.icon({
     iconUrl: MARKER_ICON_URL,
