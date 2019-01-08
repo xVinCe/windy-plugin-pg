@@ -1,12 +1,76 @@
 <plugin>
 	<script>
 	import map from '@windy/map'
+	import interpolator from '@windy/interpolator'
+	import store from '@windy/store'
+	import broadcast from '@windy/broadcast'
+	import _ from '@windy/utils'
 	import data from './test_data.mjs'
 	import createIcon from './icon_create.mjs'
 	import UnknownIcon from './icon_unknown.mjs'
 	import LandingIcon from './icon_landing.mjs'
 
-    let markers = [];
+	let markers = [];
+	let allSites = [];
+	let zones = [];
+	let currentZoom = 0;
+
+	
+	const onMoveEnd = () => {
+		console.log('onMoveEnd');
+
+		getSites()
+		.then((unused) => {
+			drawIcons();
+		});
+	};
+
+	// Get PG sites if needed
+	const getSites = () => {
+		let bounds = map.getBounds();
+		let zoom = map.getZoom();
+
+		console.log('bounds=', bounds);
+
+		if (zoom < 8) {
+			return Promise.resolve();
+		}
+
+		// TODO: If the zone is already covered by previous calls, return
+
+
+		return fetch(`https://pg-api.ovh/sites/lng/${bounds.getWest()}/${bounds.getEast()}/lat/${bounds.getSouth()}/${bounds.getNorth()}/`)
+        .then(response => response.json())
+        .then(result => {
+			console.log('result=', result);
+
+			// TODO: Concat with existing sites & manage already fetched zones
+            allSites = result;
+        })
+        .catch(console.error);
+	};
+
+	const drawIcons = () => {
+		for (const site of allSites) {
+			let icon;
+			
+			if (site.type == "landing") { // Landings
+				icon = LandingIcon;
+			} else { // Take-offs
+				if (parseInt(site.orientations) > 0) {
+					icon = createIcon(site.orientations);
+				} else {
+					icon = UnknownIcon;
+				}
+			}
+			const marker = L.marker([site["lat"], site["lng"]], {
+								icon: icon,
+								type: site.type,
+								opacity: 0.8,
+							}).addTo(map);
+			markers.push(marker);
+		}
+	};
 
 	const updateIconStyle = () => {
 		let zoom = map.getZoom();
@@ -25,12 +89,55 @@
 				}
 			}
 		}
+
+		interpolateValues();
+	}
+
+	// Major interpolation function
+	const interpolateValues = () => {
+		console.log('interpolateValues');
+		console.log('map.getBounds()', map.getBounds());
+		/**
+		 * This example can interpolate only wind overlay, but
+		 * you can interpolate almost any raster layer of Windy
+		 */
+		if( store.get('overlay') !== 'wind' ) {
+			console.warn('I can interpolate only Wind sorry');
+			return;
+		}
+		/**
+		 * Interpolator returns interpolation function
+		 */
+		interpolator( interpolate => {
+			markers.forEach((m, i) => {
+				const name = m.options.title;
+				const lat = m._latlng.lat;
+				const lon = m._latlng.lng;
+				/**
+				 * Interpolate finally gets you the values
+				 * @param {Object} { lat, lon }
+				 * @return {Array} array of raw meterological values or null, NaN, -1
+				 */
+				const values = interpolate.call(interpolator, { lat, lon })
+				/**
+				 * Remember that we are able to interpolate values only for
+				 * points that are visible on map
+				 */
+				if (Array.isArray(values)) {
+					const { wind, dir } = _.wind2obj(values);
+					console.log(`${name} - ${Math.round(wind)}m/s ${dir}`);
+
+				} else {
+					console.warn(`Unable to interpolate value for ${lat}, ${lon}.`);
+				}
+			})
+		})
 	}
 
     const load = () => {
 
 		console.log('load');
-
+/*
 		for (const site of data.gpx.wpt) {
 			let icon;
 			
@@ -47,11 +154,11 @@
 								icon: icon,
 								title: site.name,
 								type: site.type,
-								opacity: 0.65,
+								opacity: 0.75,
 							}).addTo(map);
 			markers.push(marker);
 		}
-		updateIconStyle();
+		updateIconStyle();*/
     }
 
     const remove = () => {
@@ -60,19 +167,15 @@
     }
 
 
-    let hasHooks = false
+    let hasHooks = false;
 
     this.onopen = () => {
     	if (hasHooks) return;
 
     	load();
 
-	    map.on('zoom', updateIconStyle);
-    	map.on('zoomend', updateIconStyle);
-    	map.on('viewreset', updateIconStyle);
+	    map.on('moveend', onMoveEnd);
     	hasHooks = true;
-
-    	map.setView([14, -29], 4);
 
     }
 
@@ -81,9 +184,7 @@
 
     	remove();
 
-	    map.off('zoom', updateIconStyle);
-    	map.off('zoomend', updateIconStyle);
-    	map.off('viewreset', updateIconStyle);
+	    map.off('moveend', onMoveEnd);
     	hasHooks = false;
     }
 

@@ -1,12 +1,12 @@
 const angles = {
-  "N": 0,
-  "NE": 45,
-  "E": 90,
-  "SE": 135,
-  "S": 180,
-  "SW": 225,
-  "W": 270,
-  "NW": 315,
+  0: 0,
+  1: 45,
+  2: 90,
+  3: 135,
+  4: 180,
+  5: 225,
+  6: 270,
+  7: 315,
 };
 
 // Base icon with center only
@@ -25,10 +25,12 @@ const SVG_URL_PREFIX = `data:image/svg+xml;utf8,`;
 
 export default (orientations) => {
   let icon = SVG_START;
-  for (const orientation of Object.keys(orientations)) {
-    if (orientations[orientation] >= 1) {
-      icon += ORIENTATION.replace('_ANGLE_', angles[orientation])
+  let i = 0;
+  for (const orientation of orientations) {
+    if (orientation >= 1) {
+      icon += ORIENTATION.replace('_ANGLE_', angles[i])
     }
+    i++;
   }
 
   icon = SVG_URL_PREFIX + encodeURI(icon + SVG_END);
