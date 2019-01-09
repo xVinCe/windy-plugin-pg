@@ -3,7 +3,9 @@ This plugin adds icons to the map indicating takeoffs, with the flyability of ea
 
 **This plugin's goal is to help paragliders in choosing a take-off that suits the weather forecast. It is only intented as a tool. In no way this plugin replaces the full weather analysis any pilot needs to do before taking off from anywhere**
 
-Flyability of a site is determined as follows:
+In the current version (0.1.0), flyability of a site is determined as follows:
+- Wind has to come from a direction that is appropriate for the takeoff
+- Wind has to be less to 5m/s (green icon) or 8m/s (orange icon)
 
 ## Features
 - Displays sites only at a certain zoom level
