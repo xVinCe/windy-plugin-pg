@@ -21,7 +21,7 @@
 
 	
 	const updateMap = () => {
-		console.log('updateMap');
+		console.debug('updateMap');
 
 		getSites()
 		.then((boolDraw) => {
@@ -32,7 +32,7 @@
 	};
 
 	const onParamsChanged = () => {
-		console.log('onParamsChanged');
+		console.debug('onParamsChanged');
 
 		setIcons();
 	};
@@ -42,7 +42,7 @@
 		let bounds = map.getBounds();
 		zoom = map.getZoom();
 
-		console.log('bounds=', bounds);
+		console.debug('bounds=', bounds);
 
 		if (zoom < 8) { // Remove markers if dezooming, then return
 			removeMarkers();
@@ -55,8 +55,6 @@
 		return fetch(`https://pg-api.ovh/sites/lng/${bounds.getWest()}/${bounds.getEast()}/lat/${bounds.getSouth()}/${bounds.getNorth()}/`)
         .then(response => response.json())
         .then(result => {
-			console.log('result=', result);
-
 			// TODO: Concat with existing sites & manage already fetched zones
 			allSites = result;
 			return true;
@@ -107,7 +105,7 @@
 				if (Array.isArray(values)) {
 					const { wind, dir } = _.wind2obj(values);
 
-					console.log(`values for ${lat}, ${lon}: ${wind}m/s, dir=${dir}`);
+					console.debug(`values for ${lat}, ${lon}: ${wind}m/s, dir=${dir}`);
 
 					let icon;
 			
@@ -182,7 +180,7 @@
 
     const load = () => {
 
-		console.log('load');
+		console.debug('load');
 		updateMap();
 
     }
@@ -202,7 +200,6 @@
 
 		map.on('moveend', updateMap);
 		broadcast.on('paramsChanged', params => {
-			console.log('paramsChanged');
 			onParamsChanged();
 		});
     	hasHooks = true;

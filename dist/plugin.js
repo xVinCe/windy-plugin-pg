@@ -52,7 +52,7 @@ function () {
   var WIND_STR_MAX = 8;
 
   var updateMap = function updateMap() {
-    console.log('updateMap');
+    console.debug('updateMap');
     getSites().then(function (boolDraw) {
       if (boolDraw) {
         drawIcons();
@@ -61,14 +61,14 @@ function () {
   };
 
   var onParamsChanged = function onParamsChanged() {
-    console.log('onParamsChanged');
+    console.debug('onParamsChanged');
     setIcons();
   };
 
   var getSites = function getSites() {
     var bounds = map.getBounds();
     zoom = map.getZoom();
-    console.log('bounds=', bounds);
+    console.debug('bounds=', bounds);
 
     if (zoom < 8) {
       removeMarkers();
@@ -78,7 +78,6 @@ function () {
     return fetch("https://pg-api.ovh/sites/lng/".concat(bounds.getWest(), "/").concat(bounds.getEast(), "/lat/").concat(bounds.getSouth(), "/").concat(bounds.getNorth(), "/")).then(function (response) {
       return response.json();
     }).then(function (result) {
-      console.log('result=', result);
       allSites = result;
       return true;
     }).catch(console.error);
@@ -143,7 +142,7 @@ function () {
               wind = _$wind2obj.wind,
               dir = _$wind2obj.dir;
 
-          console.log("values for ".concat(lat, ", ").concat(lon, ": ").concat(wind, "m/s, dir=").concat(dir));
+          console.debug("values for ".concat(lat, ", ").concat(lon, ": ").concat(wind, "m/s, dir=").concat(dir));
           var icon;
 
           if (site.type == "landing") {
@@ -232,7 +231,7 @@ function () {
   };
 
   var load = function load() {
-    console.log('load');
+    console.debug('load');
     updateMap();
   };
 
@@ -250,7 +249,6 @@ function () {
     load();
     map.on('moveend', updateMap);
     broadcast.on('paramsChanged', function (params) {
-      console.log('paramsChanged');
       onParamsChanged();
     });
     hasHooks = true;
