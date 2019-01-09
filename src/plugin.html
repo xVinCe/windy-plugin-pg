@@ -6,6 +6,7 @@
 	import broadcast from '@windy/broadcast'
 	import _ from '@windy/utils'
 	import data from './test_data.mjs'
+	import angles from './angles.mjs'
 	import createIcon from './icon_create.mjs'
 	import UnknownIcon from './icon_unknown.mjs'
 	import LandingIcon from './icon_landing.mjs'
@@ -13,27 +14,39 @@
 	let markers = [];
 	let allSites = [];
 	let zones = [];
-	let currentZoom = 0;
+	let zoom = 0;
+
+	const WIND_STR_WARN = 5; // m/s
+	const WIND_STR_MAX = 8; // m/s
 
 	
-	const onMoveEnd = () => {
-		console.log('onMoveEnd');
+	const updateMap = () => {
+		console.log('updateMap');
 
 		getSites()
-		.then((unused) => {
-			drawIcons();
+		.then((boolDraw) => {
+			if (boolDraw) {
+				drawIcons();
+			}
 		});
+	};
+
+	const onParamsChanged = () => {
+		console.log('onParamsChanged');
+
+		setIcons();
 	};
 
 	// Get PG sites if needed
 	const getSites = () => {
 		let bounds = map.getBounds();
-		let zoom = map.getZoom();
+		zoom = map.getZoom();
 
 		console.log('bounds=', bounds);
 
-		if (zoom < 8) {
-			return Promise.resolve();
+		if (zoom < 8) { // Remove markers if dezooming, then return
+			removeMarkers();
+			return Promise.resolve(false);
 		}
 
 		// TODO: If the zone is already covered by previous calls, return
@@ -45,72 +58,40 @@
 			console.log('result=', result);
 
 			// TODO: Concat with existing sites & manage already fetched zones
-            allSites = result;
+			allSites = result;
+			return true;
         })
         .catch(console.error);
 	};
 
 	const drawIcons = () => {
+		removeMarkers();
 		for (const site of allSites) {
-			let icon;
 			
-			if (site.type == "landing") { // Landings
-				icon = LandingIcon;
-			} else { // Take-offs
-				if (parseInt(site.orientations) > 0) {
-					icon = createIcon(site.orientations);
-				} else {
-					icon = UnknownIcon;
-				}
+			if (site.type == "takeoff" && parseInt(site.orientations) > 0) { // TODO: Manage landings & unknown orientations
+				const marker = L.marker([site["lat"], site["lng"]], {
+									//icon: icon,
+									site: site,
+									opacity: 0.8,
+								}).addTo(map);
+				markers.push(marker);
 			}
-			const marker = L.marker([site["lat"], site["lng"]], {
-								icon: icon,
-								type: site.type,
-								opacity: 0.8,
-							}).addTo(map);
-			markers.push(marker);
 		}
+
+		setIcons();
 	};
 
-	const updateIconStyle = () => {
-		let zoom = map.getZoom();
-		console.log('updateIconStyle, zoom=', zoom);
-
-		for (const marker of markers) {
-			if (marker._icon) {
-				if (zoom < 8) {
-					marker._icon.style.display = 'none';
-				} else {
-					if (marker.options.type == 'landing' && zoom < 12) {
-						marker._icon.style.display = 'none';
-					} else {
-						marker._icon.style.display = 'block';
-					}
-				}
-			}
+	const setIcons = () => {
+		let windMode = true;
+		if (store.get('overlay') !== 'wind') {
+			console.warn('Windy pg-plugin only works with wind overlay for the moment');
+			windMode = false;
 		}
 
-		interpolateValues();
-	}
-
-	// Major interpolation function
-	const interpolateValues = () => {
-		console.log('interpolateValues');
-		console.log('map.getBounds()', map.getBounds());
-		/**
-		 * This example can interpolate only wind overlay, but
-		 * you can interpolate almost any raster layer of Windy
-		 */
-		if( store.get('overlay') !== 'wind' ) {
-			console.warn('I can interpolate only Wind sorry');
-			return;
-		}
-		/**
-		 * Interpolator returns interpolation function
-		 */
 		interpolator( interpolate => {
 			markers.forEach((m, i) => {
-				const name = m.options.title;
+				
+				const site = m.options.site;
 				const lat = m._latlng.lat;
 				const lon = m._latlng.lng;
 				/**
@@ -125,8 +106,73 @@
 				 */
 				if (Array.isArray(values)) {
 					const { wind, dir } = _.wind2obj(values);
-					console.log(`${name} - ${Math.round(wind)}m/s ${dir}`);
 
+					console.log(`values for ${lat}, ${lon}: ${wind}m/s, dir=${dir}`);
+
+					let icon;
+			
+					if (site.type == "landing") { // Landings, not available atm (TODO on pg-api)
+						icon = LandingIcon;
+					} else { // Take-offs
+						if (windMode) {
+
+						}
+						// TODO: Soaring site
+
+						// Alpine site
+						if (parseInt(site.orientations) > 0) {
+							let color = 'grey';
+							if (windMode) {
+								let windStr = 0; // 0 = unflyable, 1 = maybe, 2 = flyable
+								let windOrientation = 0;
+
+								// Wind strength
+								if (wind < WIND_STR_WARN) {
+									windStr = 2;
+								} else if (wind < WIND_STR_MAX) {
+									windStr = 1;
+								}
+								// Wind orientation
+								let i = 0;
+								for (let orientation of site.orientations) {
+									if (orientation >= 1) {
+										if (i == 0) {
+											if (dir > 360 - 23 || dir < 23) {
+												windOrientation = 2;
+												break;	
+											}
+										} else if (dir > angles[i] - 23 && dir < angles[i] + 23) {
+											windOrientation = 2;
+											break;
+										}
+										
+									}
+									i++;
+								}
+								// Determine color
+								let flyability = windOrientation * windStr;
+								switch (flyability) {
+									case 1:
+									case 2:
+										color = 'orange';
+										break;
+									case 4:
+										color = 'darkgreen';
+										break;
+									case 0:
+									default:
+										color = 'red';
+								}
+							}
+							
+
+							icon = createIcon(site.orientations, color, zoom);
+							m.setIcon(icon);
+						} else {
+							// TODO: Manage unknown orientations
+							// icon = UnknownIcon;
+						}
+					}
 				} else {
 					console.warn(`Unable to interpolate value for ${lat}, ${lon}.`);
 				}
@@ -137,31 +183,11 @@
     const load = () => {
 
 		console.log('load');
-/*
-		for (const site of data.gpx.wpt) {
-			let icon;
-			
-			if (site.type == "landing") { // Landings
-				icon = LandingIcon;
-			} else { // Take-offs
-				if (site.cmt && site.cmt.orientations) {
-					icon = createIcon(site.cmt.orientations);
-				} else {
-					icon = UnknownIcon;
-				}
-			}
-			const marker = L.marker([site["-lat"], site["-lon"]], {
-								icon: icon,
-								title: site.name,
-								type: site.type,
-								opacity: 0.75,
-							}).addTo(map);
-			markers.push(marker);
-		}
-		updateIconStyle();*/
+		updateMap();
+
     }
 
-    const remove = () => {
+    const removeMarkers = () => {
     	markers.forEach( l => map.removeLayer(l) );
     	markers = [];
     }
@@ -174,7 +200,11 @@
 
     	load();
 
-	    map.on('moveend', onMoveEnd);
+		map.on('moveend', updateMap);
+		broadcast.on('paramsChanged', params => {
+			console.log('paramsChanged');
+			onParamsChanged();
+		});
     	hasHooks = true;
 
     }
@@ -182,9 +212,9 @@
     this.onclose = () => {
     	if (!hasHooks) return;
 
-    	remove();
+    	removeMarkers();
 
-	    map.off('moveend', onMoveEnd);
+	    map.off('moveend', updateMap);
     	hasHooks = false;
     }
 

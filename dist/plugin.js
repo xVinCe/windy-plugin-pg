@@ -30,6 +30,8 @@ function () {
 
   var createIcon = W.require('windy-plugin-pg/icon_create');
 
+  var angles = W.require('windy-plugin-pg/angles');
+
   var data = W.require('windy-plugin-pg/test_data');
 
   var _ = W.require('utils');
@@ -45,22 +47,32 @@ function () {
   var markers = [];
   var allSites = [];
   var zones = [];
-  var currentZoom = 0;
+  var zoom = 0;
+  var WIND_STR_WARN = 5;
+  var WIND_STR_MAX = 8;
 
-  var onMoveEnd = function onMoveEnd() {
-    console.log('onMoveEnd');
-    getSites().then(function (unused) {
-      drawIcons();
+  var updateMap = function updateMap() {
+    console.log('updateMap');
+    getSites().then(function (boolDraw) {
+      if (boolDraw) {
+        drawIcons();
+      }
     });
+  };
+
+  var onParamsChanged = function onParamsChanged() {
+    console.log('onParamsChanged');
+    setIcons();
   };
 
   var getSites = function getSites() {
     var bounds = map.getBounds();
-    var zoom = map.getZoom();
+    zoom = map.getZoom();
     console.log('bounds=', bounds);
 
     if (zoom < 8) {
-      return Promise.resolve();
+      removeMarkers();
+      return Promise.resolve(false);
     }
 
     return fetch("https://pg-api.ovh/sites/lng/".concat(bounds.getWest(), "/").concat(bounds.getEast(), "/lat/").concat(bounds.getSouth(), "/").concat(bounds.getNorth(), "/")).then(function (response) {
@@ -68,10 +80,12 @@ function () {
     }).then(function (result) {
       console.log('result=', result);
       allSites = result;
+      return true;
     }).catch(console.error);
   };
 
   var drawIcons = function drawIcons() {
+    removeMarkers();
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -79,24 +93,14 @@ function () {
     try {
       for (var _iterator = allSites[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var site = _step.value;
-        var icon = void 0;
 
-        if (site.type == "landing") {
-          icon = LandingIcon;
-        } else {
-          if (parseInt(site.orientations) > 0) {
-            icon = createIcon(site.orientations);
-          } else {
-            icon = UnknownIcon;
-          }
+        if (site.type == "takeoff" && parseInt(site.orientations) > 0) {
+          var marker = L.marker([site["lat"], site["lng"]], {
+            site: site,
+            opacity: 0.8
+          }).addTo(map);
+          markers.push(marker);
         }
-
-        var marker = L.marker([site["lat"], site["lng"]], {
-          icon: icon,
-          type: site.type,
-          opacity: 0.8
-        }).addTo(map);
-        markers.push(marker);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -112,43 +116,21 @@ function () {
         }
       }
     }
+
+    setIcons();
   };
 
-  var updateIconStyle = function updateIconStyle() {
-    var zoom = map.getZoom();
-    console.log('updateIconStyle, zoom=', zoom);
-
-    for (var _i = 0; _i < markers.length; _i++) {
-      var marker = markers[_i];
-
-      if (marker._icon) {
-        if (zoom < 8) {
-          marker._icon.style.display = 'none';
-        } else {
-          if (marker.options.type == 'landing' && zoom < 12) {
-            marker._icon.style.display = 'none';
-          } else {
-            marker._icon.style.display = 'block';
-          }
-        }
-      }
-    }
-
-    interpolateValues();
-  };
-
-  var interpolateValues = function interpolateValues() {
-    console.log('interpolateValues');
-    console.log('map.getBounds()', map.getBounds());
+  var setIcons = function setIcons() {
+    var windMode = true;
 
     if (store.get('overlay') !== 'wind') {
-      console.warn('I can interpolate only Wind sorry');
-      return;
+      console.warn('Windy pg-plugin only works with wind overlay for the moment');
+      windMode = false;
     }
 
     interpolator(function (interpolate) {
       markers.forEach(function (m, i) {
-        var name = m.options.title;
+        var site = m.options.site;
         var lat = m._latlng.lat;
         var lon = m._latlng.lng;
         var values = interpolate.call(interpolator, {
@@ -161,7 +143,87 @@ function () {
               wind = _$wind2obj.wind,
               dir = _$wind2obj.dir;
 
-          console.log("".concat(name, " - ").concat(Math.round(wind), "m/s ").concat(dir));
+          console.log("values for ".concat(lat, ", ").concat(lon, ": ").concat(wind, "m/s, dir=").concat(dir));
+          var icon;
+
+          if (site.type == "landing") {
+            icon = LandingIcon;
+          } else {
+            if (windMode) {}
+
+            if (parseInt(site.orientations) > 0) {
+              var color = 'grey';
+
+              if (windMode) {
+                var windStr = 0;
+                var windOrientation = 0;
+
+                if (wind < WIND_STR_WARN) {
+                  windStr = 2;
+                } else if (wind < WIND_STR_MAX) {
+                  windStr = 1;
+                }
+
+                var _i = 0;
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                  for (var _iterator2 = site.orientations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var orientation = _step2.value;
+
+                    if (orientation >= 1) {
+                      if (_i == 0) {
+                        if (dir > 360 - 23 || dir < 23) {
+                          windOrientation = 2;
+                          break;
+                        }
+                      } else if (dir > angles[_i] - 23 && dir < angles[_i] + 23) {
+                        windOrientation = 2;
+                        break;
+                      }
+                    }
+
+                    _i++;
+                  }
+                } catch (err) {
+                  _didIteratorError2 = true;
+                  _iteratorError2 = err;
+                } finally {
+                  try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                      _iterator2.return();
+                    }
+                  } finally {
+                    if (_didIteratorError2) {
+                      throw _iteratorError2;
+                    }
+                  }
+                }
+
+                var flyability = windOrientation * windStr;
+
+                switch (flyability) {
+                  case 1:
+                  case 2:
+                    color = 'orange';
+                    break;
+
+                  case 4:
+                    color = 'darkgreen';
+                    break;
+
+                  case 0:
+                  default:
+                    color = 'red';
+                }
+              }
+
+              icon = createIcon(site.orientations, color, zoom);
+              m.setIcon(icon);
+            } else {}
+          }
         } else {
           console.warn("Unable to interpolate value for ".concat(lat, ", ").concat(lon, "."));
         }
@@ -171,9 +233,10 @@ function () {
 
   var load = function load() {
     console.log('load');
+    updateMap();
   };
 
-  var remove = function remove() {
+  var removeMarkers = function removeMarkers() {
     markers.forEach(function (l) {
       return map.removeLayer(l);
     });
@@ -185,14 +248,18 @@ function () {
   this.onopen = function () {
     if (hasHooks) return;
     load();
-    map.on('moveend', onMoveEnd);
+    map.on('moveend', updateMap);
+    broadcast.on('paramsChanged', function (params) {
+      console.log('paramsChanged');
+      onParamsChanged();
+    });
     hasHooks = true;
   };
 
   this.onclose = function () {
     if (!hasHooks) return;
-    remove();
-    map.off('moveend', onMoveEnd);
+    removeMarkers();
+    map.off('moveend', updateMap);
     hasHooks = false;
   };
 });
@@ -2923,10 +2990,10 @@ W.define('windy-plugin-pg/test_data', [], function () {
   };
 });
 /*! */
-// This page was transpiled automatically from src\icon_create.mjs
+// This page was transpiled automatically from src\angles.mjs
 
-W.define('windy-plugin-pg/icon_create', [], function () {
-  var angles = {
+W.define('windy-plugin-pg/angles', [], function () {
+  return {
     0: 0,
     1: 45,
     2: 90,
@@ -2935,41 +3002,46 @@ W.define('windy-plugin-pg/icon_create', [], function () {
     5: 225,
     6: 270,
     7: 315
-  }; // Base icon with center only
+  };
+});
+/*! */
+// This page was transpiled automatically from src\icon_create.mjs
 
-  var SVG_START = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 100 100\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<polygon points=\"30.364,2 69.636,2 98,30.364 98,69.636 69.636,98 30.364,98 2,69.636 2,30.364\" fill=\"none\" stroke=\"white\" stroke-width=\"4\" />\n<polygon points=\"39.773,25 60.227,25 75,39.773 75,60.227 60.227,75 39.773,75 25,60.227 25,39.773\" fill=\"black\" />"; // Path for an orientation
+W.define('windy-plugin-pg/icon_create', ['windy-plugin-pg/angles'], function (angles) {
+  // Base icon with center only
+  var SVG_START = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 100 100\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<polygon points=\"30.364,2 69.636,2 98,30.364 98,69.636 69.636,98 30.364,98 2,69.636 2,30.364\" fill=\"none\" stroke=\"white\" stroke-width=\"4\" />\n<polygon points=\"39.773,25 60.227,25 75,39.773 75,60.227 60.227,75 39.773,75 25,60.227 25,39.773\" fill=\"_COLOR_\" />"; // Path for an orientation
 
-  var ORIENTATION = "<polygon points=\"33.2,6 66.8,6 60,23 40,23\" fill=\"black\" transform=\"rotate(_ANGLE_ 50 50)\"/>";
+  var ORIENTATION = "<polygon points=\"33.2,6 66.8,6 60,23 40,23\" fill=\"_COLOR_\" transform=\"rotate(_ANGLE_ 50 50)\"/>";
   var SVG_END = "</svg>";
   var SVG_URL_PREFIX = "data:image/svg+xml;utf8,";
-  return function (orientations) {
-    var icon = SVG_START;
+  return function (orientations, color, zoom) {
+    var icon = SVG_START.replace('_COLOR_', color);
     var i = 0;
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
 
     try {
-      for (var _iterator2 = orientations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var orientation = _step2.value;
+      for (var _iterator3 = orientations[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var orientation = _step3.value;
 
         if (orientation >= 1) {
-          icon += ORIENTATION.replace('_ANGLE_', angles[i]);
+          icon += ORIENTATION.replace('_ANGLE_', angles[i]).replace('_COLOR_', color);
         }
 
         i++;
       }
     } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
+      _didIteratorError3 = true;
+      _iteratorError3 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-          _iterator2.return();
+        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+          _iterator3.return();
         }
       } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
+        if (_didIteratorError3) {
+          throw _iteratorError3;
         }
       }
     }
