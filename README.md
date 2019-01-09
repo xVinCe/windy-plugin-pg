@@ -9,6 +9,13 @@ In the current version (0.1.0), flyability of a site is determined as follows:
 - Wind has to come from a direction that is appropriate for the takeoff
 - Wind has to be less to 5m/s (green icon) or 8m/s (orange icon)
 
+## How to use?
+1. Go to https://www.windy.com/plugins and load windy-plugin-pg
+2. Click on "More layers" in the lower right corner of the map, the list of available layers should appear
+3. Click on "Paragliding plugin" in the list
+4. Zoom until you see paragliding site icons
+![Screenshot of how to activate the plugin](docs/how-to-activate.png)
+
 ## Features
 - Displays sites only at a certain zoom level
 - Displays the orientation of each site on the icon
