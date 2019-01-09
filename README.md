@@ -3,6 +3,8 @@ This plugin adds icons to the map indicating takeoffs, with the flyability of ea
 
 **This plugin's goal is to help paragliders in choosing a take-off that suits the weather forecast. It is only intented as a tool. In no way this plugin replaces the full weather analysis any pilot needs to do before taking off from anywhere**
 
+![Screenshot of windy-plugin-pg](docs/windy-plugin-pg_screenshot.png)
+
 In the current version (0.1.0), flyability of a site is determined as follows:
 - Wind has to come from a direction that is appropriate for the takeoff
 - Wind has to be less to 5m/s (green icon) or 8m/s (orange icon)
@@ -16,8 +18,9 @@ In the current version (0.1.0), flyability of a site is determined as follows:
 - Only works with Wind overlay, displays grey icons with other overlays
 - Only works for alpine sites at the moment. Soaring sites are displayed, but flyability doesn't take into account the minimum wind.
 
-## Roadmap
+## Next steps
 - Improve icon management (smaller icons when low zoom, bigger icons when zooming)
+- Add a tooltip with site infos on hover (like Windy's basic PG plugin)
 - Performance improvements (avoid reloading already loaded sites from the API, avoid re-drawing already drawn icons)
 - Manage Soaring sites properly
 - Display landings and takeoffs with an unknown orientation
